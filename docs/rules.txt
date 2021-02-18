@@ -1,0 +1,14 @@
+- check-in at 14:00hrs
+- check-out at 12:00hrs
+
+
+Eu como cliente gostaria de consultar a disponibilidade de quartos para uma data específica
+Eu como cliente gostaria de saber o valor do quarto selecionado após buscar a disponibilidade
+Eu como cliente gostaria de saber o valor de cada diária após selecionar um quarto disponível
+
+
+Eu como admin gostaria de configurar o preço de cada quarto 
+Eu como admin gostaria que o preço de todos os quartos tivessem o valor diferente dependendo da data
+Eu como admin gostaria que determinados quartos tivessem o valor diferente para determinada data
+
+
