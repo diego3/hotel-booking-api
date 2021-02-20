@@ -1,4 +1,4 @@
-module https://github.com/diego3/hotel-booking-api
+module github.com/diego3/hotel-booking-api v0.0.0
 
 go 1.16
 
@@ -6,5 +6,5 @@ go 1.16
 
 require (
 	go.mongodb.org/mongo-driver v1.4.6 // indirect
-	https://github.com/diego3/hotel-booking-api/app v0.0.0-00010101000000-000000000000 // indirect
+	github.com/diego3/hotel-booking-api/app v0.0.0-00010101000000-000000000000 // indirect
 )
