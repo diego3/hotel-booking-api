@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/diego3/hotel-booking-api/app"
+	app "github.com/diego3/hotel-booking-api/app"
 )
 
 func main() {
