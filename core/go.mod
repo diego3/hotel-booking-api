@@ -1,4 +1,4 @@
-module hotel-booking.com/v1/core
+module github.com/diego3/hotel-booking-api/app/core
 
 go 1.16
 

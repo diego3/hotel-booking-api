@@ -2,9 +2,11 @@ package app
 
 import (
 	"fmt"
-	//"hotel-booking.com/v1/core"
+
+	"github.com/diego3/hotel-booking-api/app/core"
 )
 
+// Hello represents a function test
 func Hello() {
 	var arg string
 	fmt.Scanf("%s", &arg)
@@ -12,6 +14,6 @@ func Hello() {
 
 	//fmt.Printf("dt1: %s, dt2: %s", dt1, dt2)
 	if arg == "ping" {
-		//core.ConnectionPing()
+		core.ConnectionPing()
 	}
 }
