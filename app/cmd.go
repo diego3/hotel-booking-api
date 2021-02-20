@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 
-	"github.com/diego3/hotel-booking-api/app/core"
+	"github.com/diego3/hotel-booking-api/core"
 )
 
 // Hello represents a function test

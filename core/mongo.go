@@ -10,10 +10,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// ConnectionPing pings the mongodb connection
 func ConnectionPing() {
 	// Replace the uri string with your MongoDB deployment's connection string.
 	//uri := "mongodb+srv://<username>:<password>@<cluster-address>/test?w=majority"
-	uri := "localhost:27017@testing"
+	uri := "mongodb:27017@testing"
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
