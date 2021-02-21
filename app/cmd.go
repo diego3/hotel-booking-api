@@ -9,8 +9,8 @@ import (
 	"github.com/diego3/hotel-booking-api/core"
 )
 
-// TestMongoConnection makes a ping test
-func TestMongoConnection() {
+// StartCommandLineApplication start a command line application
+func StartCommandLineApplication() {
 	command := Command("Enter the command:")
 
 	if command == "ping" {

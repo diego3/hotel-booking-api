@@ -41,13 +41,30 @@ func ConnectionPing() {
 
 // RegisterRoom is responsible for create a new document at mongodb
 func RegisterRoom(name string) (id *mongo.InsertOneResult) {
+	var result mongo.InsertOneResult
+	Exec(10*time.Second, "rooms", func(ctx context.Context, collection *mongo.Collection) {
+		insertResult, err := collection.InsertOne(ctx, bson.D{
+			{Key: "name", Value: name},
+		})
+
+		if err != nil {
+			log.Fatalln("Error on insertOne", err)
+			return
+		}
+		result = *insertResult
+	})
+	return &result
+}
+
+// Exec executes some operation in mongodb
+func Exec(timeout time.Duration, collectionName string, query func(context.Context, *mongo.Collection)) {
 	//client, ctx := GetMongoClient()
 	uri := "mongodb://localhost:27017/"
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
-		panic(err)
+		log.Fatalln("error trying to connect with mongodb", err)
 	}
 
 	defer func() {
@@ -56,15 +73,7 @@ func RegisterRoom(name string) (id *mongo.InsertOneResult) {
 		}
 	}()
 
-	collection := client.Database("hotel1").Collection("rooms")
+	collection := client.Database("hotel1").Collection(collectionName)
 
-	insertResult, err := collection.InsertOne(ctx, bson.D{
-		{Key: "name", Value: name},
-	})
-
-	if err != nil {
-		log.Fatalln("Error on insertOne", err)
-		return nil
-	}
-	return insertResult
+	query(ctx, collection)
 }

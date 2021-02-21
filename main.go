@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("hotel booking")
-	app.TestMongoConnection()
+	fmt.Println("hotel booking application")
+	app.StartCommandLineApplication()
 
 }
