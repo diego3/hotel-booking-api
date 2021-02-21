@@ -3,17 +3,17 @@ package core
 import (
 	"context"
 	"fmt"
+	"log"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-// ConnectionPing pings the mongodb connection
-func ConnectionPing() {
-	// Replace the uri string with your MongoDB deployment's connection string.
-	//uri := "mongodb+srv://<username>:<password>@<cluster-address>/test?w=majority"
+// GetMongoClient gets a client connection
+func GetMongoClient() (mongo.Client, context.Context) {
 	uri := "mongodb://localhost:27017/"
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -21,14 +21,50 @@ func ConnectionPing() {
 	if err != nil {
 		panic(err)
 	}
+	return *client, ctx
+}
+
+// ConnectionPing pings the mongodb connection
+func ConnectionPing() {
+	client, ctx := GetMongoClient()
 	defer func() {
-		if err = client.Disconnect(ctx); err != nil {
+		if err := client.Disconnect(ctx); err != nil {
 			panic(err)
 		}
 	}()
-	// Ping the primary
+
 	if err := client.Ping(ctx, readpref.Primary()); err != nil {
 		panic(err)
 	}
 	fmt.Println("Successfully connected and pinged.")
+}
+
+// RegisterRoom is responsible for create a new document at mongodb
+func RegisterRoom(name string) (id *mongo.InsertOneResult) {
+	//client, ctx := GetMongoClient()
+	uri := "mongodb://localhost:27017/"
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	if err != nil {
+		panic(err)
+	}
+
+	defer func() {
+		if err := client.Disconnect(ctx); err != nil {
+			log.Fatalln("error on disconnect mongodb", err)
+		}
+	}()
+
+	collection := client.Database("hotel1").Collection("rooms")
+
+	insertResult, err := collection.InsertOne(ctx, bson.D{
+		{Key: "name", Value: name},
+	})
+
+	if err != nil {
+		log.Fatalln("Error on insertOne", err)
+		return nil
+	}
+	return insertResult
 }
