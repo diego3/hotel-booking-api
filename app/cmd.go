@@ -22,7 +22,7 @@ func StartCommandLineApplication() {
 		if len(roomName) == 0 {
 			log.Fatalln("room name cant be empty")
 		}
-		core.RegisterRoom(roomName)
+		core.CreateRoom(roomName)
 	}
 }
 
